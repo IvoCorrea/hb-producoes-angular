@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Global styles for the application */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: rgb(0, 0, 0);
+  color: white;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
