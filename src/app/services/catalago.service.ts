@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-
-export interface ItemCatalogo {
-  slug: string;
-  titulo: string;
-  descricao: string;
-  imagem: string[];
-}
+import { ItemDetalhes } from '../shared/itemDetalhes.modal';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CatalagoService {
-  private itens: ItemCatalogo[] = [
+  private itens: ItemDetalhes[] = [
     {
       slug: 'palcos',
       titulo: 'Palcos',
@@ -50,11 +44,11 @@ export class CatalagoService {
     }
   ];
 
-  public getItens(): ItemCatalogo[] {
+  public getItens(): ItemDetalhes[] {
     return this.itens;
   }
 
-  public getItemBySlug(slug: string): ItemCatalogo | undefined {
+  public getItemBySlug(slug: string): ItemDetalhes | undefined {
     return this.itens.find(item => item.slug === slug);
   }
 }
