@@ -1,21 +1,74 @@
-
 <!-- VIDEOS -->
-<section id="videos" class="py-28 px-6">
+<section id="videos" class="py-28 px-6 bg-zinc-950">
   <div class="max-w-7xl mx-auto">
 
     <div class="text-center mb-20">
+      <p class="uppercase tracking-[0.4em] text-red-500 mb-4 text-sm">Em movimento</p>
       <h2 class="text-4xl md:text-6xl font-black">Conheça a HB Produções</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <video controls class="rounded-3xl w-full">
-         <source src="/video1.mp4" type="video/mp4">
-      </video>
 
-      <video controls class="rounded-3xl w-full">
-        <source src="/video2.mp4" type="video/mp4">
-      </video>
+      @for (video of videos; track video.src; let i = $index) {
+        <div
+          (click)="togglePlay(i)"
+          class="group relative overflow-hidden rounded-3xl bg-black ring-1 ring-white/10 shadow-2xl shadow-black/60 cursor-pointer aspect-video"
+        >
+          <video
+            #player
+            (ended)="onEnded(i)"
+            class="w-full h-full object-cover pointer-events-none"
+            playsinline
+            preload="metadata"
+            controlslist="nodownload noremoteplayback noplaybackrate"
+            disablepictureinpicture
+          >
+            <source [src]="video.src" type="video/mp4">
+          </video>
+
+          <!-- Overlay gradiente -->
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300"
+            [class.opacity-0]="playingIndex() === i"
+            [class.opacity-100]="playingIndex() !== i"
+          ></div>
+
+          <!-- Botão play customizado -->
+          <div
+            class="absolute inset-0 flex items-center justify-center transition-all duration-300"
+            [class.opacity-0]="playingIndex() === i"
+            [class.scale-90]="playingIndex() === i"
+            [class.opacity-100]="playingIndex() !== i"
+            [class.scale-100]="playingIndex() !== i"
+          >
+            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-red-600 group-hover:bg-red-500 flex items-center justify-center shadow-2xl shadow-red-900/50 ring-4 ring-white/10 transition">
+              <svg class="w-8 h-8 md:w-10 md:h-10 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Pause indicator (aparece ao hover quando tocando) -->
+          @if (playingIndex() === i) {
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
+              <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center ring-2 ring-white/30">
+                <svg class="w-8 h-8 md:w-10 md:h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 5h4v14H6zM14 5h4v14h-4z"/>
+                </svg>
+              </div>
+            </div>
+          }
+
+          <!-- Título no rodapé -->
+          <div
+            class="absolute bottom-0 left-0 right-0 p-6 md:p-8 transition-opacity duration-300"
+            [class.opacity-0]="playingIndex() === i"
+          >
+            <p class="uppercase tracking-[0.3em] text-red-500 text-xs mb-2">HB Produções</p>
+            <h3 class="text-2xl md:text-3xl font-black">{{ video.titulo }}</h3>
+          </div>
+        </div>
+      }
     </div>
-
   </div>
 </section>
