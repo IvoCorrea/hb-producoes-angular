@@ -6,4 +6,6 @@ import { Home } from "./components/home/home";
 export const routes: Routes = [
     { path: '', component: Home},
     { path: 'detalhes/:slug', component: Detalhes },
+    { path: 'eventos/:slug', component: Detalhes },
+    { path: '**', redirectTo: '' },
 ];
